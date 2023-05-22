@@ -22,8 +22,8 @@ app.post('/usuarios', async (req, res) => {
   
   try {
     const client = await pool.connect();
-    const query = 'INSERT INTO usuarios (nombre, edad) VALUES ($1, $2) RETURNING *';
-    const values = [nombre, edad];
+    const query = 'INSERT INTO usuarios (cedula,nombre,primer_apellido,segundo_apellido,fecha_nacimiento) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+    const values = [cedula,nombre,primer_apellido,segundo_apellido,fecha_nacimiento];
     const result = await client.query(query, values);
     const createdUser = result.rows[0];
     client.release();
@@ -120,7 +120,7 @@ app.delete('/usuarios/:id_usuario', async (req, res) => {
 app.get('/usuarios/promedio-edad', async (req, res) => {
   try {
     const client = await pool.connect();
-    const query = 'SELECT AVG(edad) AS promedio_edad FROM usuarios';
+    const query = 'SELECT AVG(EXTRACT(YEAR FROM AGE(NOW(), fecha_nacimiento))) AS promedio_edad FROM usuarios';
     const result = await client.query(query);
     const { promedio_edad } = result.rows[0];
     client.release();
