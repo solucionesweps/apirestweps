@@ -1,5 +1,5 @@
 CREATE TABLE usuario (id SERIAL PRIMARY KEY,
-  cedula_identidad VARCHAR(20) PRIMARY KEY,
+  cedula_identidad VARCHAR(20) ,
   nombre VARCHAR(50) NOT NULL,
   primer_apellido VARCHAR(50) NOT NULL,
   segundo_apellido VARCHAR(50),
